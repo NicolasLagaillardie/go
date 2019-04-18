@@ -3,11 +3,19 @@ package main
 import (
 	"fmt"
 	"math"
+	"math/cmplx"
 	"math/rand"
 	"time"
 )
 
-var c, python, java bool
+const Pi = 3.14
+
+var (
+	c, python, java bool
+	ToBe   bool       = false
+	MaxInt uint64     = 1<<64 - 1
+	z      complex128 = cmplx.Sqrt(-5 + 12i)
+)
 
 func add(x, y int) int {
 	return x + y
@@ -42,4 +50,26 @@ func main() {
 
 	var i int
 	fmt.Println(i, c, python, java)
+
+	var c2, python2, java2 = true, false, "no"
+	fmt.Println(c2, python2, java2)
+
+	k := 3
+	fmt.Println(k)
+
+	fmt.Printf("Type: %T Value: %v\n", ToBe, ToBe)
+	fmt.Printf("Type: %T Value: %v\n", MaxInt, MaxInt)
+	fmt.Printf("Type: %T Value: %v\n", z, z)
+
+	a, b := 3, 4
+	f := math.Sqrt(float64(a*a + b*b))
+	z := uint(f)
+	fmt.Println(a, b, z)
+	
+	const World = "世界"
+	fmt.Println("Hello", World)
+	fmt.Println("Happy", Pi, "Day")
+
+	const Truth = true
+	fmt.Println("Go rules?", Truth)
 }

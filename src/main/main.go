@@ -8,7 +8,8 @@ import (
 	"time"
 )
 
-const (Pi = 3.14
+const (
+	Pi = 3.14
 	// Create a huge number by shifting a 1 bit left 100 places.
 	// In other words, the binary number that is 1 followed by 100 zeroes.
 	Big = 1 << 100
@@ -18,9 +19,9 @@ const (Pi = 3.14
 
 var (
 	c, python, java bool
-	ToBe   bool       = false
-	MaxInt uint64     = 1<<64 - 1
-	z      complex128 = cmplx.Sqrt(-5 + 12i)
+	ToBe                   = false
+	MaxInt          uint64 = 1<<64 - 1
+	z                      = cmplx.Sqrt(-5 + 12i)
 )
 
 func add(x, y int) int {
@@ -33,13 +34,20 @@ func swap(x, y string) (string, string) {
 
 func split(sum int) (x, y int) {
 	x = sum * 4 / 9
-	y = sum -x
+	y = sum - x
 	return
 }
 
 func needInt(x int) int { return x*10 + 1 }
 func needFloat(x float64) float64 {
 	return x * 0.1
+}
+
+func sqrt(x float64) string {
+	if x < 0 {
+		return sqrt(-x) + "i"
+	}
+	return fmt.Sprint(math.Sqrt(x))
 }
 
 func main() {
@@ -84,7 +92,26 @@ func main() {
 	const Truth = true
 	fmt.Println("Go rules?", Truth)
 
+	fmt.Println(Small)
 	fmt.Println(needInt(Small))
 	fmt.Println(needFloat(Small))
 	fmt.Println(needFloat(Big))
+
+	sum := 0
+	for i := 0; i < 10; i++ {
+		sum += i
+	}
+	fmt.Println(sum)
+
+	sum = 1
+	for ; sum < 100; {
+		sum += sum
+	}
+	fmt.Println(sum)
+
+	sum = 1
+	for sum < 100 {
+		sum += sum
+	}
+	fmt.Println(sum)
 }

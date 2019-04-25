@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"golang.org/x/tour/pic"
 	"math"
 	"math/cmplx"
 	"math/rand"
@@ -92,6 +93,10 @@ func printSlice(s []int) {
 func printSlice2(s string, x []int) {
 	fmt.Printf("%s len=%d cap=%d %v\n",
 		s, len(x), cap(x), x)
+}
+
+func Pic(dx, dy int) [][]uint8 {
+	return nil
 }
 
 func main() {
@@ -297,4 +302,32 @@ func main() {
 
 	s = s[2:5]
 	printSlice2("d", s)
+
+	printSlice(s)
+
+	// append works on nil slices.
+	s = append(s, 0)
+	printSlice(s)
+
+	// The slice grows as needed.
+	s = append(s, 1)
+	printSlice(s)
+
+	// We can add more than one element at a time.
+	s = append(s, 2, 3, 4)
+	printSlice(s)
+
+	for i, v := range s {
+		fmt.Printf("s[%d] = %d\n", i, v)
+	}
+
+	pow := make([]int, 10)
+	for i := range pow {
+		pow[i] = 1 << uint(i) // == 2**i
+	}
+	for _, value := range pow {
+		fmt.Printf("%d\n", value)
+	}
+
+	pic.Show(Pic)
 }

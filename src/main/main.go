@@ -85,6 +85,15 @@ func Sqrt(x float64) float64 {
 	return z
 }
 
+func printSlice(s []int) {
+	fmt.Printf("len=%d cap=%d %v\n", len(s), cap(s), s)
+}
+
+func printSlice2(s string, x []int) {
+	fmt.Printf("%s len=%d cap=%d %v\n",
+		s, len(x), cap(x), x)
+}
+
 func main() {
 	fmt.Println("Welcome to the playground!")
 
@@ -223,4 +232,69 @@ func main() {
 	fmt.Println(v)
 
 	fmt.Println(v1, r, v2, v3)
+
+	var array [2]string
+	array[0] = "Hello"
+	array[1] = "World"
+
+	fmt.Println(array[0], array[1])
+	fmt.Println(array)
+
+	primes := [6]int{2, 3, 5, 7, 11, 13}
+	fmt.Println(primes)
+
+	var s []int = primes[1:4]
+	fmt.Println(s)
+
+	names := [4]string{
+		"John",
+		"Paul",
+		"George",
+		"Ringo",
+	}
+	fmt.Println(names)
+
+	namesA := names[0:2]
+	namesB := names[1:3]
+	fmt.Println(namesA, namesB)
+
+	namesB[0] = "XXX"
+	fmt.Println(namesA, namesB)
+	fmt.Println(names)
+
+	s = s[1:4]
+	fmt.Println(s)
+
+	s = s[:2]
+	fmt.Println(s)
+
+	s = s[1:]
+	fmt.Println(s)
+
+	s = []int{2, 3, 5, 7, 11, 13}
+	printSlice(s)
+
+	// Slice the slice to give it zero length.
+	s = s[:0]
+	printSlice(s)
+
+	// Extend its length.
+	s = s[:4]
+	printSlice(s)
+
+	// Drop its first two values.
+	s = s[2:]
+	printSlice(s)
+
+	s = make([]int, 5)
+	printSlice2("a", s)
+
+	s = make([]int, 0, 5)
+	printSlice2("b", s)
+
+	s = s[:2]
+	printSlice2("c", s)
+
+	s = s[2:5]
+	printSlice2("d", s)
 }

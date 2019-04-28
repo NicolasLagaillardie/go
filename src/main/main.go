@@ -3,10 +3,13 @@ package main
 import (
 	"fmt"
 	"golang.org/x/tour/pic"
+	"golang.org/x/tour/wc"
+	_ "golang.org/x/tour/wc"
 	"math"
 	"math/cmplx"
 	"math/rand"
 	"runtime"
+	"strings"
 	"time"
 )
 
@@ -28,11 +31,24 @@ var (
 	v2                     = Vertex{X: 1}  // Y:0 is implicit
 	v3                     = Vertex{}      // X:0 and Y:0
 	r                      = &Vertex{1, 2} // has type *Vertex
+	m               map[string]Vertex2
+	n               = map[string]Vertex2{
+		"Bell Labs": {
+			40.68433, -74.39967,
+		},
+		"Google": {
+			37.42202, -122.08408,
+		},
+	}
 )
 
 type Vertex struct {
 	X int
 	Y int
+}
+
+type Vertex2 struct {
+	Lat, Long float64
 }
 
 func add(x, y int) int {
@@ -106,6 +122,15 @@ func Pic(dx, dy int) [][]uint8 {
 		result[x] = temp
 	}
 
+	return result
+}
+
+func WordCount(s string) map[string]int {
+	words := strings.Fields(s)
+	result := make(map[string]int)
+	for _, v := range words {
+		result[v]++
+	}
 	return result
 }
 
@@ -340,4 +365,29 @@ func main() {
 	}
 
 	pic.Show(Pic)
+
+	m = make(map[string]Vertex2)
+	m["Bell Labs"] = Vertex2{
+		40.68433, -74.39967,
+	}
+	fmt.Println(m["Bell Labs"])
+
+	fmt.Println(n)
+
+	m := make(map[string]int)
+
+	m["Answer"] = 42
+	fmt.Println("The value:", m["Answer"])
+
+	m["Answer"] = 48
+	fmt.Println("The value:", m["Answer"])
+
+	delete(m, "Answer")
+	fmt.Println("The value:", m["Answer"])
+
+	value, ok := m["Answer"]
+	fmt.Println("The value:", value, "Present?", ok)
+
+	wc.Test(WordCount)
+
 }

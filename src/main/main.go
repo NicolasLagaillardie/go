@@ -96,7 +96,17 @@ func printSlice2(s string, x []int) {
 }
 
 func Pic(dx, dy int) [][]uint8 {
-	return nil
+	result := make([][]uint8, dx, dx)
+
+	for x := 0; x < dx; x++ {
+		temp := make([]uint8, dy, dy)
+		for y := 0; y < dy; y++ {
+			temp[y] = uint8(y)
+		}
+		result[x] = temp
+	}
+
+	return result
 }
 
 func main() {

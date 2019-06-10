@@ -47,6 +47,10 @@ type Vertex struct {
 	Y int
 }
 
+type VertexFloat struct {
+	X, Y float64
+}
+
 type Vertex2 struct {
 	Lat, Long float64
 }
@@ -132,6 +136,47 @@ func WordCount(s string) map[string]int {
 		result[v]++
 	}
 	return result
+}
+
+func compute(fn func(float64, float64) float64) float64 {
+	return fn(3, 4)
+}
+
+func adder() func(int) int {
+	sum := 0
+	return func(x int) int {
+		sum += x
+		return sum
+	}
+}
+
+// fibonacci is a function that returns
+// a function that returns an int.
+func fibonacci() func() int {
+	first, second := 0, 1
+	return func() int {
+		ret := first
+		first, second = second, first+second
+		return ret
+	}
+}
+
+func (v VertexFloat) Abs() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+type MyFloat float64
+
+func (f MyFloat) Abs() float64 {
+	if f < 0 {
+		return float64(-f)
+	}
+	return float64(f)
+}
+
+func Scale(v *VertexFloat, f float64) {
+	v.X = v.X * f
+	v.Y = v.Y * f
 }
 
 func main() {
@@ -389,5 +434,37 @@ func main() {
 	fmt.Println("The value:", value, "Present?", ok)
 
 	wc.Test(WordCount)
+
+	hypot := func(x, y float64) float64 {
+		return math.Sqrt(x*x + y*y)
+	}
+	fmt.Println(hypot(5, 12))
+
+	fmt.Println(compute(hypot))
+	fmt.Println(compute(math.Pow))
+
+	pos, neg := adder(), adder()
+	for i := 0; i < 10; i++ {
+		fmt.Println(
+			pos(i),
+			neg(-2*i),
+		)
+	}
+
+	fib := fibonacci()
+	for i := 0; i < 10; i++ {
+		fmt.Println(fib())
+	}
+
+	v2 := VertexFloat{3, 4}
+	fmt.Println(v2.Abs())
+
+	flo := MyFloat(-math.Sqrt2)
+	fmt.Println(flo)
+	fmt.Println(flo.Abs())
+
+	vFloat := VertexFloat{3, 4}
+	Scale(&vFloat, 10)
+	fmt.Println(vFloat.Abs())
 
 }
